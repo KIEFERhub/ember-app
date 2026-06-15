@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ember — 전체 화면 개요</title>
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/youtube/white" data-resource-id="youtube" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/instagram/white" data-resource-id="instagram" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/tiktok/white" data-resource-id="tiktok" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/kakaotalk/3C1E1E" data-resource-id="kakaotalk" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/netflix/E50914" data-resource-id="netflix" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/spotify/white" data-resource-id="spotify" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/x/white" data-resource-id="x" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/naver/white" data-resource-id="naver" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/discord/white" data-resource-id="discord" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/googlechrome/4285F4" data-resource-id="googlechrome" />
+<link rel="stylesheet" href="colors_and_type.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; }
+  * { word-break: keep-all; }
+  body { background: #EDE8DC; font-family: var(--font-sans); }
+  *::-webkit-scrollbar { width: 0; height: 0; }
+  .ember-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 24px; height: 24px; border-radius: 9999px;
+    background: #fff; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    border: 3px solid var(--ember);
+  }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#EDE8DC">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#EDE8DC"/>
+    <rect x="80" y="80" width="200" height="640" rx="24" fill="#fff" opacity="0.7"/>
+    <rect x="310" y="80" width="200" height="640" rx="24" fill="#fff" opacity="0.7"/>
+    <rect x="540" y="80" width="200" height="640" rx="24" fill="#fff" opacity="0.7"/>
+    <rect x="770" y="80" width="200" height="640" rx="24" fill="#fff" opacity="0.7"/>
+    <rect x="1000" y="80" width="200" height="640" rx="24" fill="#fff" opacity="0.7"/>
+    <circle cx="600" cy="400" r="40" fill="#E86F35" opacity="0.15"/>
+    <g transform="translate(572,372) scale(1.8)">
+      <path fill-rule="nonzero" fill="#E86F35" d="M893.78,347.03c-1.97-1.95-2.51-4.38-2.01-6.93.9-4.63,1.58-9.15,1.86-13.84.06-.97.47-1.79,1.34-2.08.73-.24,1.8-.16,2.38.53,3.93,4.66,7.19,9.7,9.8,15.2,3.58,7.55,5.43,15.54,4.43,23.87-.03.23.38.85.6.77l.81-.29c4.74-7.97,6.61-17.07,5.49-26.28-1.71-15.12-9.84-31.09-19.15-43.09-2.74-3.52-5.65-6.64-8.91-9.65-.53-.49-1.44-.5-2.03-.19s-.78.95-.85,1.76c-.69,8.93-3.96,17.35-9.1,24.74-2.78,3.99-5.89,7.49-9.28,10.98l-6.86,7.04c-2.4,2.46-4.31,5.11-5.99,8.1-3.73,6.61-4.76,14.35-2.49,21.61,4.21,13.46,19.8,21.45,33.52,17.93,8.06-2.07,14.85-8.37,14.5-16.68-.14-3.47-1.58-6.56-3.75-9.26l-4.31-4.25h0ZM908.46,388.75c-16.82,10-36.11,7.77-51.94-3.09-22.65-15.55-31.16-46.2-12.39-67.92,2.6-3.01,5.46-5.53,8.44-8.17l6.45-5.72c12.03-11.25,16.35-25.63,15.98-41.69-.03-1.19.3-2.21,1.16-2.84.85-.64,2.18-.97,3.26-.54,2.29.92,4.35,2.08,6.5,3.4,6.79,4.19,12.97,9.17,18.61,14.81,12.29,12.28,22.65,28.12,27.79,44.61,1.68,5.39,2.67,10.77,3.03,16.37,1.33,20.44-9.01,40.15-26.89,50.78h0Z"/>
+    </g>
+  </svg>
+</template>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="kakao_icon.js"></script>
+<script src="photos.js"></script>
+<script type="text/babel" src="Icons.jsx"></script>
+<script type="text/babel" src="FlameState.jsx"></script>
+<script type="text/babel" src="Primitives.jsx"></script>
+<script type="text/babel" src="Shell.jsx"></script>
+<script type="text/babel" src="HomeHero.jsx"></script>
+<script type="text/babel" src="HomeScreen.jsx"></script>
+<script type="text/babel" src="RoutineGallery.jsx"></script>
+<script type="text/babel" src="FocusMode.jsx"></script>
+<script type="text/babel" src="ReportScreen.jsx"></script>
+<script type="text/babel" src="SleepScreen.jsx"></script>
+<script type="text/babel" src="LeagueScreen.jsx"></script>
+<script type="text/babel" src="MoodScreen.jsx"></script>
+<script type="text/babel" src="FlameGalleryScreen.jsx"></script>
+<script type="text/babel" src="MyPageScreen.jsx"></script>
+<script type="text/babel" src="NotificationsScreen.jsx"></script>
+<script type="text/babel" src="OnboardingFlow.jsx"></script>
+<script type="text/babel" src="ios-frame.jsx"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+
+<script type="text/babel">
+const SCORE = 72;
+const AW = 390, AH = 844; // artboard = iOS inner content dimensions
+
+/* ── Light-mode app wrapper ─────────────────────────────── */
+function Frame({ dark = false, children }) {
+  return (
+    <IOSDevice dark={dark}>
+      <div className={dark ? '' : 'theme-light'} style={{
+        height: '100%', boxSizing: 'border-box',
+        display: 'flex', flexDirection: 'column',
+        background: 'var(--bg)', paddingTop: 50, position: 'relative',
+      }}>
+        {children}
+      </div>
+    </IOSDevice>
+  );
+}
+
+/* ── Artboard helper (full-screen tab screen) ─────────────── */
+function TabFrame({ tab, dark = false }) {
+  return (
+    <Frame dark={dark}>
+      <Header />
+      <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
+        {tab === 'home'   && <HomeScreen onNavigate={() => {}} onOpenFocus={() => {}} onOpenUsage={() => {}} onOpenApps={() => {}} onOpenFocusScore={() => {}} score={SCORE} />}
+        {tab === 'report' && <ReportScreen score={SCORE} onNavigate={() => {}} onOpenWeekUsage={() => {}} />}
+        {tab === 'sleep'  && <SleepScreen />}
+        {tab === 'league' && <LeagueScreen />}
+      </div>
+      <TabBar active={tab} onChange={() => {}} />
+    </Frame>
+  );
+}
+
+/* ── Overlay screens ──────────────────────────────────────── */
+function OverlayFrame({ which, dark = false }) {
+  return (
+    <Frame dark={dark}>
+      {which === 'mypage'        && <MyPageScreen onBack={() => {}} theme={dark ? 'dark' : 'light'} onToggleTheme={() => {}} score={SCORE} />}
+      {which === 'notifications' && <NotificationsScreen onBack={() => {}} />}
+      {which === 'mood'          && <MoodScreen onBack={() => {}} />}
+      {which === 'flames'        && <FlameGalleryScreen onBack={() => {}} score={SCORE} />}
+      {which === 'focus'         && (
+        <>
+          <Header />
+          <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
+            <HomeScreen onNavigate={() => {}} onOpenFocus={() => {}} onOpenUsage={() => {}} onOpenApps={() => {}} onOpenFocusScore={() => {}} score={SCORE} />
+          </div>
+          <TabBar active="home" onChange={() => {}} />
+          <FocusSheet onClose={() => {}} preset={null} />
+        </>
+      )}
+    </Frame>
+  );
+}
+
+/* ── Main overview ────────────────────────────────────────── */
+function Overview() {
+  return (
+    <DesignCanvas>
+      <DCSection id="onboarding" title="온보딩">
+        <DCArtboard id="ob-splash" label="스플래시 / 로그인" width={AW} height={AH}>
+          <OnboardingApp />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="tabs" title="메인 탭">
+        <DCArtboard id="tab-home"   label="홈"     width={AW} height={AH}><TabFrame tab="home" /></DCArtboard>
+        <DCArtboard id="tab-report" label="리포트"  width={AW} height={AH}><TabFrame tab="report" /></DCArtboard>
+        <DCArtboard id="tab-sleep"  label="수면"   width={AW} height={AH}><TabFrame tab="sleep" /></DCArtboard>
+        <DCArtboard id="tab-league" label="리그"   width={AW} height={AH}><TabFrame tab="league" /></DCArtboard>
+      </DCSection>
+
+      <DCSection id="sub" title="서브 화면">
+        <DCArtboard id="ov-mypage" label="마이페이지"   width={AW} height={AH}><OverlayFrame which="mypage" /></DCArtboard>
+        <DCArtboard id="ov-notif"  label="알림"        width={AW} height={AH}><OverlayFrame which="notifications" /></DCArtboard>
+        <DCArtboard id="ov-mood"   label="기분 기록"    width={AW} height={AH}><OverlayFrame which="mood" /></DCArtboard>
+        <DCArtboard id="ov-flames" label="불꽃 갤러리"  width={AW} height={AH}><OverlayFrame which="flames" /></DCArtboard>
+        <DCArtboard id="ov-focus"  label="집중 모드"    width={AW} height={AH}><OverlayFrame which="focus" /></DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Overview />);
+</script>
+</body>
+</html>

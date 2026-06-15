@@ -1,0 +1,149 @@
+/* ============================================================
+   EMBER — Design System Foundations
+   Light-first palette. Orange reserved for brand accents only.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+:root {
+  /* ---------- BRAND / PRIMARY — ember orange (accent-only) ---------- */
+  --ember:            #E8703A;  /* brand orange — used sparingly      */
+  --ember-deep:       #D45A22;  /* pressed state                      */
+  --ember-soft:       #F0A070;  /* soft peach                         */
+  --ember-pale:       #FADECE;  /* palest peach tint                  */
+  --ember-tint-10:    rgba(232,112,58,0.10);
+  --ember-tint-05:    rgba(232,112,58,0.05);
+  --ember-tint-20:    rgba(232,112,58,0.20);
+
+  /* ---------- FLAME SPECTRUM (heatmap data viz only) ---------- */
+  --flame-0:  #1A1A1A;  /* empty cell on dark                         */
+  --flame-1:  #FAE0CC;  /* very light usage                           */
+  --flame-2:  #F5B88A;  /* light                                      */
+  --flame-3:  #EE8E48;  /* medium                                     */
+  --flame-4:  #E8703A;  /* heavy                                      */
+  --flame-5:  #C04E22;  /* very heavy                                 */
+  --flame-6:  #7A2E10;  /* over-usage                                 */
+
+  /* ---------- NEUTRALS — DARK (black base) ---------- */
+  --bg:               #0E0E0E;  /* near-black                         */
+  --surface-1:        #181818;  /* raised surface                     */
+  --surface-2:        #1E1E1E;  /* nav / chips                        */
+  --card-dark:        #212121;  /* standard card                      */
+  --hairline-dark:    #2E2E2E;  /* dividers                           */
+  --stroke-brown:     #3A3A3A;  /* stroke                             */
+
+  /* ---------- INSIGHT INSERT ---------- */
+  --cream:            #252018;
+  --beige:            #F0E8DA;
+  --cream-sub:        #8A8278;
+  --pedestal:         #080808;
+
+  /* ---------- TEXT — neutral, clean ---------- */
+  --fg-1:             #F4F0EB;  /* primary — warm white               */
+  --fg-2:             #8A8278;  /* secondary — warm gray              */
+  --fg-3:             #58524A;  /* tertiary — warm dark gray          */
+  --ink:              #F4F0EB;
+  --ink-2:            #A89E94;  /* warm light gray                    */
+  --on-ember:         #FFFFFF;  /* text on orange fill                */
+
+  /* ---------- SEMANTIC ---------- */
+  --positive:         #78BF72;  /* warm sage green — harmonises with ember orange */
+  --positive-dim:     #4E9C4A;
+  --shadow-soft:      rgba(0,0,0,0.08);
+  --shadow-card:      0px 1px 3px rgba(0,0,0,0.14);
+  --shadow-pop:       0px 10px 30px -6px rgba(0,0,0,0.70);
+  --glow-ember:       0 0 28px 0 rgba(232,112,58,0.45);
+
+  /* ---------- GLASS TOKENS — neutral dark glass ---------- */
+  --glass-bg:      rgba(14,14,14,0.65);
+  --glass-border:  rgba(255,255,255,0.08);
+  --glass-blur:    blur(22px);
+
+  /* ---------- INSET TOKENS — neutral, no orange tint ---------- */
+  --inset:        rgba(255,255,255,0.05);
+  --inset-2:      rgba(255,255,255,0.07);
+  --inset-strong: rgba(255,255,255,0.09);
+  --track:        rgba(255,255,255,0.11);
+  --toggle-off:   rgba(255,255,255,0.18);
+  --avatar-edge:  var(--card-dark);
+
+  /* ---------- RADII ---------- */
+  --r-xs:   8px;
+  --r-sm:   12px;
+  --r-md:   16px;
+  --r-lg:   24px;
+  --r-xl:   32px;
+  --r-pill: 9999px;
+
+  /* ---------- SPACING ---------- */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px; --s-12: 48px;
+
+  /* ---------- TYPE ---------- */
+  --font-sans: 'Chiron GoRound TC', 'Noto Sans KR', -apple-system,
+               'Apple SD Gothic Neo', sans-serif;
+  --font-num:  'Chiron GoRound TC', 'Noto Sans KR', sans-serif;
+
+  --display:    700 30px/36px var(--font-sans);
+  --h1:         700 24px/30px var(--font-sans);
+  --h2:         500 20px/28px var(--font-sans);
+  --h3:         500 16px/22px var(--font-sans);
+  --body:       400 15px/22px var(--font-sans);
+  --body-strong:500 15px/22px var(--font-sans);
+  --label:      500 14px/17px var(--font-sans);
+  --caption:    500 12px/15px var(--font-sans);
+  --overline:   600 11px/14px var(--font-sans);
+}
+
+/* ---------- base helpers ---------- */
+* { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; font-optical-sizing: auto; }
+body { letter-spacing: -0.04em; }
+.t-display    { font: var(--display);  letter-spacing: -0.055em; }
+.t-h1         { font: var(--h1);  letter-spacing: -0.045em; }
+.t-h2         { font: var(--h2); letter-spacing: -0.04em; }
+.t-h3         { font: var(--h3); letter-spacing: -0.03em; }
+.t-body       { font: var(--body); letter-spacing: -0.025em; }
+.t-label      { font: var(--label); letter-spacing: -0.025em; }
+.t-caption    { font: var(--caption); letter-spacing: -0.02em; }
+.t-overline   { font: var(--overline); letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* ============================================================
+   LIGHT THEME — warm cream, reference-image style.
+   Orange used only on active/accent elements.
+   ============================================================ */
+.theme-light {
+  --bg:            #EDE8DC;  /* warm cream — reference image match   */
+  --surface-1:     #F8F4EE;  /* raised sheet                         */
+  --surface-2:     #FFFFFF;  /* nav bar                              */
+  --card-dark:     #FFFFFF;
+  --hairline-dark: rgba(30,20,10,0.09);
+  --stroke-brown:  #D8CCBC;
+
+  --cream:         #F5F0EA;  /* insight card — warm light surface    */
+  --cream-sub:     #9A8878;
+  --ink:           #1C1814;
+  --ink-2:         #7A6858;
+  --pedestal:      rgba(30,20,10,0.12);
+
+  --fg-1:          #1C1814;  /* near-black warm text                 */
+  --fg-2:          #8A7868;  /* muted                                */
+  --fg-3:          #B8A898;  /* hint                                 */
+
+  --flame-0:       #EAE0D0;
+
+  /* neutral insets — NO orange tint */
+  --inset:         rgba(30,20,10,0.04);
+  --inset-2:       rgba(30,20,10,0.06);
+  --inset-strong:  rgba(30,20,10,0.07);
+  --track:         rgba(30,20,10,0.09);
+  --toggle-off:    rgba(30,20,10,0.16);
+  --avatar-edge:   #FFFFFF;
+
+  /* light glass — mostly opaque white, neutral border */
+  --glass-bg:      rgba(255,255,255,0.82);
+  --glass-border:  rgba(30,20,10,0.08);
+
+  --shadow-card:   0px 1px 4px rgba(30,20,10,0.09);
+  --shadow-pop:    0px 12px 32px -10px rgba(30,20,10,0.22);
+  --on-ember:      #FFFFFF;
+}

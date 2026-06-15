@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ember — 스크린타임 앱</title>
+<!-- brand app-icon glyphs (dynamic URLs in Icons.jsx → lifted for the bundler) -->
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/youtube/white" data-resource-id="youtube" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/instagram/white" data-resource-id="instagram" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/tiktok/white" data-resource-id="tiktok" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/kakaotalk/3C1E1E" data-resource-id="kakaotalk" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/netflix/E50914" data-resource-id="netflix" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/spotify/white" data-resource-id="spotify" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/x/white" data-resource-id="x" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/naver/white" data-resource-id="naver" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/discord/white" data-resource-id="discord" />
+<meta name="ext-resource-dependency" content="https://cdn.simpleicons.org/googlechrome/4285F4" data-resource-id="googlechrome" />
+<link rel="stylesheet" href="colors_and_type.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; height: 100%; }
+  * { word-break: keep-all; }
+  body {
+    margin: 0; min-height: 100vh; font-family: var(--font-sans);
+    overflow: hidden;
+    transition: background .3s ease;
+  }
+  body.bg-dark  { background: #191209; }
+  body.bg-light { background: #EDE8DC; }
+  /* brand slider thumb */
+  .ember-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 24px; height: 24px; border-radius: 9999px;
+    background: #fff; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    border: 3px solid var(--ember);
+  }
+  .ember-range::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 9999px; background: #fff;
+    border: 3px solid var(--ember); cursor: pointer;
+  }
+  *::-webkit-scrollbar { width: 0; height: 0; }
+  @keyframes heroFlameIn { from { opacity: 0; transform: translateX(-50%) scale(0.92); } to { opacity: 1; transform: translateX(-50%) scale(1); } }
+  @keyframes flameFlare {
+    0%   { transform: scale(1) rotate(0deg); }
+    16%  { transform: scale(1.2) rotate(-3deg); }
+    36%  { transform: scale(1.07) rotate(2.5deg); }
+    56%  { transform: scale(1.14) rotate(-2deg); }
+    76%  { transform: scale(1.03) rotate(1deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  /* fit-to-viewport scaler for the fixed-size phone */
+  #stage { display: flex; align-items: center; justify-content: center; }
+  #scaler { transform-origin: center center; }
+</style>
+</head>
+<body class="bg-light">
+<template id="__bundler_thumbnail" data-bg-color="#131313">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#131313"/>
+    <radialGradient id="g" cx="50%" cy="46%" r="34%">
+      <stop offset="0%" stop-color="#5BC8D6" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#131313" stop-opacity="0"/>
+    </radialGradient>
+    <rect width="1200" height="800" fill="url(#g)"/>
+    <path d="M600 250c52 70 96 104 96 178a96 96 0 0 1-192 0c0-30 14-55 34-78 6 26 24 40 44 44-30-52 4-100 18-144z"
+      fill="#E86F35"/>
+    <path d="M600 360c22 30 40 46 40 78a40 40 0 0 1-80 0c0-22 12-40 28-54 2 14 8 22 18 26-14-24 0-38-6-50z"
+      fill="#FBEBD6"/>
+  </svg>
+</template>
+<div id="stage"><div id="scaler"><div id="root"></div></div></div>
+
+<script src="kakao_icon.js"></script>
+<script src="photos.js"></script>
+<script type="text/babel" src="Icons.jsx"></script>
+<script type="text/babel" src="OnboardingFlow.jsx"></script>
+<script type="text/babel" src="FlameState.jsx"></script>
+<script type="text/babel" src="Primitives.jsx"></script>
+<script type="text/babel" src="Shell.jsx"></script>
+<script type="text/babel" src="HomeHero.jsx"></script>
+<script type="text/babel" src="HomeScreen.jsx"></script>
+<script type="text/babel" src="RoutineGallery.jsx"></script>
+<script type="text/babel" src="FocusMode.jsx"></script>
+<script type="text/babel" src="ReportScreen.jsx"></script>
+<script type="text/babel" src="SleepScreen.jsx"></script>
+<script type="text/babel" src="LeagueScreen.jsx"></script>
+<script type="text/babel" src="MoodScreen.jsx"></script>
+<script type="text/babel" src="FlameGalleryScreen.jsx"></script>
+<script type="text/babel" src="MyPageScreen.jsx"></script>
+<script type="text/babel" src="NotificationsScreen.jsx"></script>
+<script type="text/babel" src="ios-frame.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+// flame score — higher = more restraint = healthier flame ("잔잔/steady" by default)
+const DEMO_SCORE = 72;
+
+function MainApp() {
+  const [tab, setTab] = useState('home');
+  const [overlay, setOverlay] = useState(null); // null | 'mypage' | 'notifications'
+  const [focus, setFocus] = useState(false);
+  const [focusPreset, setFocusPreset] = useState(null);
+  const [theme, setTheme] = useState(() => localStorage.getItem('ember-theme') || 'light');
+
+  useEffect(() => {
+    localStorage.setItem('ember-theme', theme);
+    document.body.className = theme === 'dark' ? 'bg-dark' : 'bg-light';
+  }, [theme]);
+
+  const dark = theme === 'dark';
+  const toggleTheme = () => setTheme(t => (t === 'dark' ? 'light' : 'dark'));
+
+  const openFocus = (preset = null) => { setFocusPreset(preset); setFocus(true); };
+  const [usageSheet, setUsageSheet] = useState(null); // null | 'home' | 'week'
+
+  // deterministic navigation helper (used by PPTX export); harmless at runtime
+  useEffect(() => {
+    window.__nav = (screen) => {
+      setFocus(false); setUsageSheet(null);
+      if (screen === 'mypage' || screen === 'notifications') { setOverlay(screen); }
+      else { setOverlay(null); setTab(screen); }
+    };
+  }, []);
+
+  const screens = {
+    home:   <HomeScreen   onNavigate={(t) => (t === 'mood' ? setOverlay(t) : t === 'flames' ? setUsageSheet('flames') : setTab(t))} onOpenFocus={openFocus} onOpenUsage={() => setUsageSheet('home')} onOpenApps={() => setUsageSheet('apps')} onOpenFocusScore={() => setUsageSheet('focusScore')} score={DEMO_SCORE} />,
+    report: <ReportScreen onNavigate={(t) => (t === 'mood' ? setOverlay(t) : setTab(t))} onOpenWeekUsage={() => setUsageSheet('week')} score={DEMO_SCORE} />,
+    sleep:  <SleepScreen  />,
+    league: <LeagueScreen />,
+  };
+
+  return (
+    <IOSDevice dark={dark}>
+      <div className={dark ? '' : 'theme-light'}
+        style={{ height: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', background: 'var(--bg)', paddingTop: 50, position: 'relative' }}>
+        {overlay === 'mypage' ? (
+          <MyPageScreen onBack={() => setOverlay(null)} theme={theme} onToggleTheme={toggleTheme} score={DEMO_SCORE} />
+        ) : overlay === 'notifications' ? (
+          <NotificationsScreen onBack={() => setOverlay(null)} />
+        ) : overlay === 'mood' ? (
+          <MoodScreen onBack={() => setOverlay(null)} />
+        ) : overlay === 'flames' ? (
+          <FlameGalleryScreen onBack={() => setOverlay(null)} score={DEMO_SCORE} />
+        ) : (
+          <>
+            <Header onProfile={() => setOverlay('mypage')} onBell={() => setOverlay('notifications')} />
+            <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
+              {screens[tab]}
+              <FocusFab onClick={() => (focus ? setFocus(false) : openFocus(null))} />
+            </div>
+            <TabBar active={tab} onChange={setTab} />
+          </>
+        )}
+        {focus && <FocusSheet onClose={() => setFocus(false)} preset={focusPreset} />}
+        {usageSheet === 'home' && <UsageReportSheet onClose={() => setUsageSheet(null)} />}
+        {usageSheet === 'apps' && <AppUsageSheet onClose={() => setUsageSheet(null)} />}
+        {usageSheet === 'focusScore' && <FocusDetailSheet onClose={() => setUsageSheet(null)} />}
+        {usageSheet === 'flames' && <FlameGalleryPopup onClose={() => setUsageSheet(null)} score={DEMO_SCORE} />}
+        {usageSheet === 'week' && <UsageDetailSheet onClose={() => setUsageSheet(null)} />}
+      </div>
+    </IOSDevice>
+  );
+}
+
+function RootApp() {
+  const [phase, setPhase] = React.useState('onboarding');
+  if (phase === 'onboarding') {
+    return <OnboardingApp onDone={() => setPhase('app')} />;
+  }
+  return <MainApp />;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<RootApp />);
+
+// fit the fixed 402×874 phone into whatever viewport we're shown in
+function fitPhone() {
+  const scaler = document.getElementById('scaler');
+  const stage = document.getElementById('stage');
+  if (!scaler) return;
+  const PW = 402, PH = 874, pad = 24;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  // bail while the iframe has no usable dimensions — avoids a negative/zero scale
+  if (vw < PW * 0.1 || vh < PH * 0.1) return;
+  const s = Math.max(0.05, Math.min((vw - pad) / PW, (vh - pad) / PH, 1));
+  scaler.style.transform = `scale(${s})`;
+  stage.style.width = vw + 'px';
+  stage.style.height = vh + 'px';
+}
+window.addEventListener('resize', fitPhone);
+window.addEventListener('load', fitPhone);
+// self-heal: re-run whenever the document actually gains/changes size
+if (window.ResizeObserver) {
+  try { new ResizeObserver(fitPhone).observe(document.documentElement); } catch (e) {}
+}
+// and a few early ticks in case the first call sees a 0-size iframe
+[0, 50, 150, 400].forEach(t => setTimeout(fitPhone, t));
+requestAnimationFrame(() => requestAnimationFrame(fitPhone));
+fitPhone();
+
+</script>
+</body>
+</html>

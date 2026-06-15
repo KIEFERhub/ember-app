@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ember — 30초 프로모</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  *::-webkit-scrollbar { display: none; }
+</style>
+<template id="__bundler_thumbnail" data-bg-color="#0E0E0E">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0E0E0E"/>
+    <radialGradient id="g" cx="50%" cy="46%" r="34%">
+      <stop offset="0%" stop-color="#5BC8D6" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0E0E0E" stop-opacity="0"/>
+    </radialGradient>
+    <rect width="1200" height="800" fill="url(#g)"/>
+    <text x="600" y="430" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="64" fill="#E8703A">Ember</text>
+    <text x="600" y="490" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#8A8278">불씨처럼, 조금씩</text>
+  </svg>
+</template>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="animations.jsx"></script>
+<script type="text/babel" src="FlameState.jsx"></script>
+
+<script type="text/babel">
+/* ─────────────────────────────────────────────────────────────
+   Ember 30초 프로모 영상 — 실제 앱 디자인과 통일된 버전
+   Stage: 390×844 (모바일)
+───────────────────────────────────────────────────────────── */
+const { Stage, useTime, animate, Easing } = window;
+const { FlameState } = window;
+
+/* ── 색상 토큰 (colors_and_type.css 와 동일하게) ─────────── */
+const FONT = "'Chiron GoRound TC', 'Noto Sans KR', -apple-system, sans-serif";
+
+// 다크 테마 (기본 / 리포트·리그 씬)
+const BG     = '#0E0E0E';
+const CARD_D = '#181818';
+const CARD2  = '#212121';
+const CREAM_D= '#252018';   // 다크 모드 AI 인사이트 카드
+const FG1    = '#F4F0EB';
+const FG2    = '#8A8278';
+const FG3    = '#58524A';
+
+// 라이트 테마 (홈 씬 — 앱 기본값)
+const BG_L   = '#EDE8DC';
+const CREAM_L= '#F5F0EA';   // 라이트 모드 AI 인사이트 카드
+const INK    = '#1C1814';
+const INK2   = '#7A6858';
+const FG2_L  = '#8A7868';
+const FG3_L  = '#B8A898';
+const HAIR_L = 'rgba(30,20,10,0.09)';
+
+// 브랜드
+const EMBER  = '#E8703A';
+const TEAL   = '#5BC8D6';
+const GREEN  = '#78BF72';
+
+// 불꽃 스펙트럼 (ReportScreen 과 동일)
+const FLAME_SCALE = ['#1A1A1A', '#FAE0CC', '#F5B88A', '#EE8E48', '#E8703A', '#C04E22', '#7A2E10'];
+
+/* ── 로고 (Shell.jsx 와 동일한 실제 경로) ─────────────────── */
+const LOGO_PATH = "M893.78,347.03c-1.97-1.95-2.51-4.38-2.01-6.93.9-4.63,1.58-9.15,1.86-13.84.06-.97.47-1.79,1.34-2.08.73-.24,1.8-.16,2.38.53,3.93,4.66,7.19,9.7,9.8,15.2,3.58,7.55,5.43,15.54,4.43,23.87-.03.23.38.85.6.77l.81-.29c4.74-7.97,6.61-17.07,5.49-26.28-1.71-15.12-9.84-31.09-19.15-43.09-2.74-3.52-5.65-6.64-8.91-9.65-.53-.49-1.44-.5-2.03-.19s-.78.95-.85,1.76c-.69,8.93-3.96,17.35-9.1,24.74-2.78,3.99-5.89,7.49-9.28,10.98l-6.86,7.04c-2.4,2.46-4.31,5.11-5.99,8.1-3.73,6.61-4.76,14.35-2.49,21.61,4.21,13.46,19.8,21.45,33.52,17.93,8.06-2.07,14.85-8.37,14.5-16.68-.14-3.47-1.58-6.56-3.75-9.26l-4.31-4.25h0ZM908.46,388.75c-16.82,10-36.11,7.77-51.94-3.09-22.65-15.55-31.16-46.2-12.39-67.92,2.6-3.01,5.46-5.53,8.44-8.17l6.45-5.72c12.03-11.25,16.35-25.63,15.98-41.69-.03-1.19.3-2.21,1.16-2.84.85-.64,2.18-.97,3.26-.54,2.29.92,4.35,2.08,6.5,3.4,6.79,4.19,12.97,9.17,18.61,14.81,12.29,12.28,22.65,28.12,27.79,44.61,1.68,5.39,2.67,10.77,3.03,16.37,1.33,20.44-9.01,40.15-26.89,50.78h0Z";
+const LOGO_VB = "818 250 125 155";
+
+function Logo({ size = 14, color = EMBER }) {
+  return (
+    <svg width={size} height={size * 1.24} viewBox={LOGO_VB} style={{ color, flexShrink: 0 }}>
+      <path fill="currentColor" fillRule="nonzero" d={LOGO_PATH} />
+    </svg>
+  );
+}
+
+/* ── 공통 UI 컴포넌트 ─────────────────────────────────────── */
+function AppHeader({ light }) {
+  const textC = light ? INK2 : FG2;
+  return (
+    <div style={{ height: 56, padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+        <Logo size={14} color={EMBER} />
+        <span style={{ font: `700 20px/1 ${FONT}`, color: EMBER, letterSpacing: '-0.04em' }}>Ember</span>
+      </div>
+      <div style={{ display: 'flex', gap: 2 }}>
+        {/* 알림 */}
+        <div style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={textC} strokeWidth="1.9" strokeLinecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <div style={{ position: 'absolute', top: 6, right: 6, width: 7, height: 7, borderRadius: 9999, background: EMBER, border: `2px solid ${light ? BG_L : BG}` }} />
+        </div>
+        {/* 프로필 */}
+        <div style={{ width: 34, height: 34, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={textC} strokeWidth="1.9" strokeLinecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TabBar({ active = 'home', light = false }) {
+  const bg     = light ? 'rgba(255,255,255,0.82)' : 'rgba(14,14,14,0.75)';
+  const border = light ? 'rgba(30,20,10,0.08)'   : 'rgba(255,255,255,0.08)';
+  const off    = light ? FG2_L : FG3;
+  const tabs = [
+    { id: 'home',   label: '홈',
+      icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
+    { id: 'report', label: '리포트',
+      icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> },
+    { id: 'sleep',  label: '수면',
+      icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg> },
+    { id: 'league', label: '리그',
+      icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg> },
+  ];
+  return (
+    <div style={{ height: 80, background: bg, borderRadius: '20px 20px 0 0', borderTop: `1px solid ${border}`, backdropFilter: 'blur(22px)', WebkitBackdropFilter: 'blur(22px)', display: 'flex', alignItems: 'center', paddingBottom: 14, flexShrink: 0, boxShadow: light ? '0 -1px 20px rgba(30,20,10,0.07)' : '0 -1px 20px rgba(0,0,0,0.3)' }}>
+      {tabs.map(tab => (
+        <div key={tab.id} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, color: tab.id === active ? EMBER : off }}>
+          {tab.icon}
+          <span style={{ font: `500 11px/1 ${FONT}`, letterSpacing: '-0.02em' }}>{tab.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function StatusBar({ light }) {
+  const c = light ? INK : FG1;
+  return (
+    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 50, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', padding: '0 24px 10px', zIndex: 20, pointerEvents: 'none' }}>
+      <span style={{ font: `600 16px/1 -apple-system, system-ui`, color: c }}>9:41</span>
+      <svg width="52" height="12" viewBox="0 0 52 12">
+        <rect x="0" y="7" width="3" height="5" rx="0.7" fill={c}/>
+        <rect x="5" y="5" width="3" height="7" rx="0.7" fill={c}/>
+        <rect x="10" y="2" width="3" height="10" rx="0.7" fill={c}/>
+        <rect x="15" y="0" width="3" height="12" rx="0.7" fill={c}/>
+        <path d="M24 3.5C26 1.5 29 0.5 31.5 0.5C34 0.5 37 1.5 39 3.5" stroke={c} strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+        <path d="M26 6.5C27.5 5 29.5 4.2 31.5 4.2C33.5 4.2 35.5 5 37 6.5" stroke={c} strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+        <circle cx="31.5" cy="10" r="1.5" fill={c}/>
+        <rect x="44" y="2" width="7" height="8" rx="1.5" stroke={c} strokeWidth="1.2" fill="none" opacity="0.5"/>
+        <rect x="45.5" y="3.5" width="4" height="5" rx="0.8" fill={c}/>
+        <rect x="51" y="4.5" width="1.5" height="3" rx="0.5" fill={c} opacity="0.5"/>
+      </svg>
+    </div>
+  );
+}
+
+/* animate 헬퍼 */
+function makeA(t) {
+  return (s, e, f, to, ease = Easing.easeOutCubic) =>
+    animate({ from: f, to, start: s, end: e, ease })(t);
+}
+
+/* ── Sparkle 아이콘 ─────────────────────────────────────── */
+function SparkleIcon({ size = 16, color = EMBER }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round">
+      <path d="M12 2L14.09 8.26L20 9.27L15.55 13.97L16.91 20L12 16.9L7.09 20L8.45 13.97L4 9.27L9.91 8.26Z"/>
+    </svg>
+  );
+}
+
+/* ── Scene 1: 브랜드 인트로 (0–3.5s) ─────────────────────── */
+function Scene1() {
+  const t = useTime();
+  const a = makeA(t);
+  const glowO = a(0.2, 2.5, 0, 0.55);
+  const logoO = a(0.4, 1.4, 0, 1);
+  const logoS = a(0.4, 1.4, 0.82, 1);
+  const wordO = a(0.9, 1.8, 0, 1);
+  const tagO  = a(2.0, 3.0, 0, 1);
+  const outO  = a(3.0, 3.5, 1, 0, Easing.easeInCubic);
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: BG, opacity: outO, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18 }}>
+      <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse 280px 280px at 50% 48%, rgba(232,112,58,${glowO}), transparent)`, pointerEvents: 'none' }} />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20, opacity: logoO, transform: `scale(${logoS})` }}>
+        <Logo size={80} color={EMBER} />
+        <span style={{ font: `800 48px/1 ${FONT}`, color: FG1, letterSpacing: '-0.055em', opacity: wordO }}>Ember</span>
+      </div>
+      <p style={{ font: `400 17px/1 ${FONT}`, color: FG2, letterSpacing: '-0.025em', opacity: tagO }}>강요 없이, 스스로 인식하는 스크린타임</p>
+    </div>
+  );
+}
+
+/* ── Scene 2: 홈 화면 (3.5–13s) — 라이트 테마 (앱 기본값) ── */
+function Scene2() {
+  const t = useTime();
+  const a = makeA(t);
+  const screenO = a(3.6, 4.4, 0, 1);
+  const slideY  = a(3.6, 4.6, 60, 0);
+  const outO    = a(12.0, 12.6, 1, 0, Easing.easeInCubic);
+  const op      = screenO * outO;
+
+  const flameO  = a(5.0, 6.0, 0, 1);
+  const statsO  = a(5.8, 6.8, 0, 1);
+  const nudgeY  = a(8.0, 9.0, 48, 0);
+  const nudgeO  = a(8.0, 9.0, 0, 1);
+  const zoomS   = a(5.0, 12.0, 1, 1.04, Easing.linear);
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, opacity: op, transform: `translateY(${slideY}px) scale(${zoomS})`, transformOrigin: 'top center' }}>
+      {/* 라이트 배경 */}
+      <div style={{ position: 'absolute', inset: 0, background: BG_L }} />
+      <StatusBar light />
+
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', paddingTop: 50 }}>
+        <AppHeader light />
+
+        <div style={{ flex: 1, padding: '4px 20px 0', overflow: 'hidden' }}>
+
+          {/* 불꽃 히어로 */}
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', marginTop: 8, opacity: flameO }}>
+            {/* 왼쪽 작은 불꽃 (흔들림 상태) */}
+            <div style={{ position: 'absolute', left: -20, bottom: 10, opacity: 0.45 }}>
+              <FlameState score={28} size={86} showLabel={false} />
+            </div>
+            {/* 오른쪽 작은 불꽃 (푸른불 상태) */}
+            <div style={{ position: 'absolute', right: -20, bottom: 10, opacity: 0.45 }}>
+              <FlameState score={92} size={86} showLabel={false} />
+            </div>
+            {/* 중앙 글로우 */}
+            <div style={{ position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', width: 260, height: 260, borderRadius: '50%', background: `radial-gradient(circle, rgba(91,200,214,0.18) 0%, transparent 65%)`, pointerEvents: 'none', filter: 'blur(6px)' }} />
+            {/* 중앙 불꽃 (잔잔) */}
+            <FlameState score={72} size={192} showLabel={false} />
+          </div>
+
+          {/* 캡션 */}
+          <p style={{ textAlign: 'center', font: `400 15px/22px ${FONT}`, color: FG2_L, letterSpacing: '-0.025em', marginTop: 10, opacity: flameO }}>잔잔하게 빛나고 있어요</p>
+
+          {/* 페이지 도트 */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 10, opacity: flameO }}>
+            {[0,1,2,3,4].map(i => (
+              <div key={i} style={{ width: i === 3 ? 18 : 6, height: 6, borderRadius: 9999, background: i === 3 ? EMBER : 'rgba(30,20,10,0.15)', transition: 'all .2s' }} />
+            ))}
+          </div>
+
+          {/* 스탯 행 — 앱과 동일한 3컬럼 */}
+          <div style={{ display: 'flex', marginTop: 20, opacity: statsO }}>
+            {/* 집중 */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <span style={{ font: `600 11px/14px ${FONT}`, color: FG3_L, letterSpacing: '0.04em', textTransform: 'uppercase' }}>집중</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <span style={{ font: `700 22px/1 ${FONT}`, color: INK, letterSpacing: '-0.04em' }}>87%</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={FG3_L} strokeWidth="2.2" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <div style={{ width: 1, background: HAIR_L, margin: '2px 0' }} />
+            {/* 스크린타임 */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <span style={{ font: `600 11px/14px ${FONT}`, color: FG3_L, letterSpacing: '0.04em', textTransform: 'uppercase' }}>스크린타임</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <span style={{ font: `700 20px/1 ${FONT}`, color: INK, letterSpacing: '-0.04em', whiteSpace: 'nowrap' }}>2h 48m</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={FG3_L} strokeWidth="2.2" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <div style={{ width: 1, background: HAIR_L, margin: '2px 0' }} />
+            {/* 최다 사용 앱 */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <span style={{ font: `600 11px/14px ${FONT}`, color: FG3_L, letterSpacing: '0.04em', textTransform: 'uppercase' }}>최다 사용</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                {/* YouTube */}
+                <div style={{ width: 24, height: 24, borderRadius: 7, background: '#FF0000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M10 15l5.19-3L10 9v6z"/><path d="M21.56 7.17a2.76 2.76 0 00-1.94-1.95C17.88 4.8 12 4.8 12 4.8s-5.88 0-7.62.42a2.76 2.76 0 00-1.94 1.95 28.41 28.41 0 000 9.66 2.76 2.76 0 001.94 1.95C6.12 19.2 12 19.2 12 19.2s5.88 0 7.62-.42a2.76 2.76 0 001.94-1.95 28.41 28.41 0 000-9.66z"/></svg>
+                </div>
+                {/* Instagram */}
+                <div style={{ width: 24, height: 24, borderRadius: 7, background: 'linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="white" strokeWidth="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="white" strokeWidth="2"/><circle cx="17.5" cy="6.5" r="1" fill="white"/></svg>
+                </div>
+                {/* KakaoTalk */}
+                <div style={{ width: 24, height: 24, borderRadius: 7, background: '#FFCD00', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#3C1E1E"><path d="M12 3C6.48 3 2 6.72 2 11.28c0 2.88 1.74 5.4 4.38 6.9l-1.11 3.3a.38.38 0 00.56.44l3.87-2.58A12 12 0 0012 19.56c5.52 0 10-3.72 10-8.28S17.52 3 12 3z"/></svg>
+                </div>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={FG3_L} strokeWidth="2.2" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+          </div>
+
+          {/* AI 인사이트 카드 — 크림 (앱과 동일) */}
+          <div style={{
+            background: CREAM_L, borderRadius: 24, padding: '18px 20px',
+            marginTop: 18, position: 'relative', overflow: 'hidden',
+            opacity: nudgeO, transform: `translateY(${nudgeY}px)`,
+          }}>
+            {/* 장식 원 */}
+            <div style={{ position: 'absolute', right: -40, bottom: -40, width: 150, height: 150, borderRadius: '50%', background: 'linear-gradient(135deg, rgba(232,112,58,0.22), rgba(232,112,58,0.02))' }} />
+
+            <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                <SparkleIcon size={14} color={EMBER} />
+                <span style={{ font: `600 11px/14px ${FONT}`, color: EMBER, letterSpacing: '0.04em', textTransform: 'uppercase' }}>AI 인사이트</span>
+              </div>
+              <span style={{ font: `500 13px/1 ${FONT}`, color: INK2, display: 'flex', alignItems: 'center', gap: 2, letterSpacing: '-0.02em' }}>
+                상세보기
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={INK2} strokeWidth="2.2" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </span>
+            </div>
+            <p style={{ margin: 0, font: `600 17px/1.55 ${FONT}`, color: INK, letterSpacing: '-0.03em', position: 'relative' }}>
+              "스트레스 받을 때 숏폼 시청이<br />늘어나는 경향이 있어요."
+            </p>
+            <p style={{ margin: '8px 0 0', font: `400 13px/1.5 ${FONT}`, color: INK2, position: 'relative' }}>
+              불씨가 사그라들면 잠시 휴식하는 건 어떨까요?
+            </p>
+          </div>
+        </div>
+
+        <TabBar active="home" light />
+      </div>
+    </div>
+  );
+}
+
+/* ── Scene 3: AI 리포트 (12.5–19.5s) — 다크 테마 ─────────── */
+// 4행 × 7일 — ReportScreen.jsx 와 동일한 데이터 구조
+const HEAT_DATA = [
+  [0, 1, 0, 0, 1, 0, 0],
+  [2, 4, 3, 5, 4, 2, 1],
+  [4, 5, 4, 6, 5, 3, 2],
+  [3, 2, 4, 3, 3, 1, 5],
+];
+const WEEK_DAYS = ['월', '화', '수', '목', '금', '토', '일'];
+
+function Scene3() {
+  const t = useTime();
+  const a = makeA(t);
+  const sceneO   = a(12.6, 13.4, 0, 1);
+  const outO     = a(19.0, 19.5, 1, 0, Easing.easeInCubic);
+  const op       = sceneO * outO;
+  const titleO   = a(13.2, 14.0, 0, 1);
+  const insightO = a(17.0, 17.8, 0, 1);
+  const insightY = a(17.0, 17.8, 24, 0);
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: BG, opacity: op }}>
+      <StatusBar light={false} />
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', paddingTop: 50 }}>
+        <AppHeader light={false} />
+
+        <div style={{ flex: 1, padding: '10px 20px', overflow: 'hidden' }}>
+          {/* 타이틀 */}
+          <div style={{ opacity: titleO }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 4 }}>
+              <SparkleIcon size={24} color={EMBER} />
+              <span style={{ font: `700 24px/30px ${FONT}`, color: FG1, letterSpacing: '-0.045em' }}>AI 리포트</span>
+            </div>
+            <p style={{ font: `400 15px/22px ${FONT}`, color: FG2, marginBottom: 16, letterSpacing: '-0.025em' }}>이번 주 당신의 불씨를 읽었어요.</p>
+          </div>
+
+          {/* 히어로 인사이트 카드 (크림 다크) */}
+          <div style={{ background: CREAM_D, borderRadius: 20, padding: '16px 18px', marginBottom: 12, opacity: titleO }}>
+            <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+              <FlameState score={72} size={44} showLabel={false} />
+              <div>
+                <div style={{ font: `600 11px/14px ${FONT}`, color: EMBER, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 3 }}>이번 달 · 성장기</div>
+                <div style={{ font: `500 15px/22px ${FONT}`, color: FG1, letterSpacing: '-0.025em' }}>불씨가 점점 안정되고 있어요</div>
+              </div>
+            </div>
+            <p style={{ font: `400 13px/1.55 ${FONT}`, color: FG2, letterSpacing: '-0.02em' }}>
+              특히 <span style={{ color: FG1, fontWeight: 500 }}>오후 시간대</span>의 절제가 불씨를 '잔잔' 상태로 지켜주고 있어요.
+            </p>
+          </div>
+
+          {/* 히트맵 — 4×7, 불꽃 스펙트럼 (앱과 동일) */}
+          <div style={{ background: CARD2, borderRadius: 20, padding: '16px 14px', opacity: titleO }}>
+            <div style={{ font: `500 15px/22px ${FONT}`, color: FG1, letterSpacing: '-0.025em', marginBottom: 12 }}>사용 히트맵</div>
+
+            {/* 요일 헤더 */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 7, marginBottom: 7 }}>
+              {WEEK_DAYS.map(d => (
+                <div key={d} style={{ font: `500 10px/1 ${FONT}`, color: FG3, textAlign: 'center', letterSpacing: '-0.01em' }}>{d}</div>
+              ))}
+            </div>
+
+            {/* 셀 그리드 */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+              {HEAT_DATA.map((row, ri) => (
+                <div key={ri} style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 7 }}>
+                  {row.map((v, ci) => {
+                    const idx = ri * 7 + ci;
+                    const cellO = animate({ from: 0, to: 1, start: 14.0 + idx * 0.035, end: 14.8 + idx * 0.035 })(t);
+                    return (
+                      <div key={ci} style={{ height: 30, borderRadius: 9, background: FLAME_SCALE[Math.min(v, FLAME_SCALE.length - 1)], opacity: cellO }} />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+
+            {/* 범례 */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 12, justifyContent: 'flex-end' }}>
+              <span style={{ font: `400 10px/1 ${FONT}`, color: FG3 }}>적음</span>
+              {[1,2,3,4,5,6].map(i => (
+                <div key={i} style={{ width: 14, height: 14, borderRadius: 4, background: FLAME_SCALE[i] }} />
+              ))}
+              <span style={{ font: `400 10px/1 ${FONT}`, color: FG3 }}>많음</span>
+            </div>
+          </div>
+
+          {/* 추가 인사이트 */}
+          <div style={{ background: CREAM_D, borderRadius: 20, padding: '14px 16px', marginTop: 12, opacity: insightO, transform: `translateY(${insightY}px)` }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 8 }}>
+              <SparkleIcon size={13} color={EMBER} />
+              <span style={{ font: `600 11px/14px ${FONT}`, color: EMBER, letterSpacing: '0.04em', textTransform: 'uppercase' }}>AI 인사이트</span>
+            </div>
+            <p style={{ font: `500 15px/1.55 ${FONT}`, color: FG1, letterSpacing: '-0.03em' }}>
+              "주말 YouTube 시청이 평일 대비 2.3배 높아요."
+            </p>
+            <p style={{ font: `400 13px/1.45 ${FONT}`, color: FG2, marginTop: 6, letterSpacing: '-0.02em' }}>
+              이번 달은 성장기예요. 스크린 타임을 잘 조절하고 있어요.
+            </p>
+          </div>
+        </div>
+
+        <TabBar active="report" />
+      </div>
+    </div>
+  );
+}
+
+/* ── Scene 4: 리그 (19.5–26s) — 다크 테마 ───────────────── */
+const TIER_NAMES = { beacon: '봉화', bonfire: '화톳불', camp: '모닥불', spark: '불씨', coal: '잉걸' };
+const TIER_COLORS = { beacon: '#F4C76B', bonfire: '#F0A23E', camp: '#E86F35', spark: '#C7502A', coal: '#8A3A1F' };
+const BOARD = [
+  { rank: 1, name: '김지민', tag: '프로 갓생러',       pts: 32, tier: 'beacon',  grad: ['#5E8FBF','#2A4E7A'] },
+  { rank: 2, name: '정해린', tag: '미라클 모닝러',     pts: 30, tier: 'beacon',  grad: ['#BF7E5E','#7A3E2A'] },
+  { rank: 3, name: '박도윤', tag: '조금만 더 힘내요!', pts: 28, tier: 'bonfire', grad: ['#5EBF8F','#2A7A52'], me: true },
+  { rank: 4, name: '최서연', tag: '꾸준함의 대명사',   pts: 25, tier: 'bonfire', grad: ['#9E5EBF','#5C2A7A'] },
+  { rank: 5, name: '이준호', tag: '주말 집중러',       pts: 21, tier: 'camp',    grad: ['#BF9E5E','#7A5C2A'] },
+];
+const RANK_COLS = ['#F4C76B', '#B8C4CC', '#E8703A'];
+
+function Scene4() {
+  const t = useTime();
+  const a = makeA(t);
+  const sceneO = a(19.6, 20.4, 0, 1);
+  const outO   = a(25.2, 25.8, 1, 0, Easing.easeInCubic);
+  const op     = sceneO * outO;
+  const titleO = a(20.3, 21.0, 0, 1);
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: BG, opacity: op }}>
+      <StatusBar light={false} />
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', paddingTop: 50 }}>
+        <AppHeader light={false} />
+
+        <div style={{ flex: 1, padding: '12px 20px', overflow: 'hidden', opacity: titleO }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 4 }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={GREEN} strokeWidth="2" strokeLinecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+            <span style={{ font: `500 13px/1 ${FONT}`, color: GREEN, letterSpacing: '-0.02em' }}>승급권 · 상위 2명</span>
+          </div>
+          <div style={{ font: `700 24px/30px ${FONT}`, color: FG1, letterSpacing: '-0.045em', marginBottom: 16 }}>커뮤니티 리그</div>
+
+          {BOARD.map((m, i) => {
+            const rowO = animate({ from: 0, to: 1, start: 20.8 + i * 0.15, end: 21.5 + i * 0.15 })(t);
+            const rowX = animate({ from: 28, to: 0,  start: 20.8 + i * 0.15, end: 21.5 + i * 0.15 })(t);
+            const tc = TIER_COLORS[m.tier];
+            return (
+              <div key={m.rank} style={{
+                display: 'flex', alignItems: 'center', padding: '11px 14px',
+                background: m.me ? 'rgba(232,112,58,0.08)' : 'rgba(255,255,255,0.03)',
+                borderRadius: 16, marginBottom: 8,
+                border: m.me ? `1.5px solid rgba(232,112,58,0.5)` : `1.5px solid ${CARD2}`,
+                opacity: rowO, transform: `translateX(${rowX}px)`,
+              }}>
+                {/* 순위 */}
+                <span style={{ font: `700 15px/1 ${FONT}`, color: RANK_COLS[i] || FG3, width: 22, flexShrink: 0, letterSpacing: '-0.02em' }}>{m.rank}</span>
+
+                {/* 그라데이션 아바타 */}
+                <div style={{
+                  width: 38, height: 38, borderRadius: 9999, flexShrink: 0, marginRight: 11,
+                  background: `linear-gradient(140deg, ${m.grad[0]}, ${m.grad[1]})`,
+                  border: m.me ? `2px solid ${EMBER}` : '2px solid rgba(255,255,255,0.10)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  font: `700 16px/1 ${FONT}`, color: '#fff', letterSpacing: 0,
+                }}>{m.name[0]}</div>
+
+                {/* 이름 + 태그 */}
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+                    <span style={{ font: `600 15px/1 ${FONT}`, color: FG1, letterSpacing: '-0.03em' }}>{m.name}</span>
+                    {m.me && <span style={{ font: `700 10px/1 ${FONT}`, color: EMBER, background: 'rgba(232,112,58,0.15)', padding: '2px 6px', borderRadius: 5 }}>ME</span>}
+                  </div>
+                  <div style={{ font: `400 12px/1 ${FONT}`, color: FG2, marginTop: 3, letterSpacing: '-0.01em' }}>{m.tag}</div>
+                </div>
+
+                {/* 티어 배지 + 점수 */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+                    <span style={{ font: `800 22px/1 ${FONT}`, color: m.me ? EMBER : FG1, letterSpacing: '-0.04em' }}>{m.pts}</span>
+                    <span style={{ font: `400 11px/1 ${FONT}`, color: FG2 }}>점</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 3, background: `${tc}18`, borderRadius: 6, padding: '2px 6px' }}>
+                    {/* 작은 불꽃 아이콘 */}
+                    <svg width="9" height="11" viewBox="0 0 12 16" fill={tc}><path d="M6 0C4 4 0 6 0 10a6 6 0 0012 0C12 6 8 4 6 0z"/></svg>
+                    <span style={{ font: `600 10px/1 ${FONT}`, color: tc, letterSpacing: '-0.01em' }}>{TIER_NAMES[m.tier]}</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <TabBar active="league" />
+      </div>
+    </div>
+  );
+}
+
+/* ── Scene 5: 클로징 (26–30s) ───────────────────────────── */
+function Scene5() {
+  const t = useTime();
+  const a = makeA(t);
+  const sceneO = a(25.8, 26.8, 0, 1);
+  const flameO = a(26.5, 27.5, 0, 1);
+  const flameS = a(26.5, 27.5, 0.88, 1);
+  const wordO  = a(27.4, 28.4, 0, 1);
+  const glowP  = 0.32 + 0.10 * Math.sin(t * 2 * Math.PI * 0.65);
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: BG, opacity: sceneO, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 28 }}>
+      <div style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse 300px 300px at 50% 45%, rgba(91,200,214,${glowP}), transparent)`, pointerEvents: 'none' }} />
+      <div style={{ opacity: flameO, transform: `scale(${flameS})`, display: 'flex', justifyContent: 'center' }}>
+        <FlameState score={92} size={220} showLabel={false} />
+      </div>
+      <div style={{ opacity: wordO, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <Logo size={34} color={EMBER} />
+          <span style={{ font: `800 44px/1 ${FONT}`, color: FG1, letterSpacing: '-0.055em' }}>Ember</span>
+        </div>
+        <p style={{ font: `400 17px/1 ${FONT}`, color: FG2, letterSpacing: '-0.025em' }}>불씨처럼, 조금씩</p>
+      </div>
+    </div>
+  );
+}
+
+/* ── 루트 ─────────────────────────────────────────────────── */
+function Video() {
+  return (
+    <Stage width={390} height={844} duration={30} background={BG}>
+      <Scene1 />
+      <Scene2 />
+      <Scene3 />
+      <Scene4 />
+      <Scene5 />
+    </Stage>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Video />);
+</script>
+</body>
+</html>
