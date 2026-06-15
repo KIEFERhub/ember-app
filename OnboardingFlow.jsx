@@ -122,7 +122,7 @@ function SplashScreen({ onDone }) {
         <path fill="currentColor" fillRule="nonzero" d={LOGO_PATH}/>
       </svg>
       <div style={{ font: '700 36px/1 var(--font-sans)', color: 'var(--fg-1)', letterSpacing: '-0.05em' }}>Ember</div>
-      <div style={{ font: 'var(--body)', color: 'var(--fg-3)', letterSpacing: '-0.02em', marginTop: 4 }}>불씨처럼, 조금씩</div>
+      <div style={{ font: 'var(--body)', color: 'var(--fg-3)', letterSpacing: '-0.02em', marginTop: 4 }}>강요 없이, 스스로 인식하게</div>
       <div style={{ position: 'absolute', bottom: 56, font: 'var(--caption)', color: 'rgba(244,240,235,0.25)', letterSpacing: 0 }}>탭하여 시작</div>
     </div>
   );
